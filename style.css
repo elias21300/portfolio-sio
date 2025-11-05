@@ -1,0 +1,99 @@
+ 
+/* Style Global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0A1335; /* Couleur de fond principale */
+    color: #ffffff; /* Couleur du texte */
+    margin: 0; /* Supprime les marges par défaut */
+    min-height: 200vh; /* Hauteur minimale de la page (double la hauteur de l'écran visible) */
+}
+
+/* Section Styling */
+section {
+    text-align: center; /* Centrer le contenu des sections */
+    padding: 100px 20px; /* Espacement interne (vertical et horizontal) */
+    border-bottom: 1px solid #FFFFFF; /* Ligne blanche entre les sections */
+    background-color: #0a1335; /* Couleur de fond pour uniformité */
+}
+
+/* Spacer pour Ajouter de la Hauteur */
+.spacer {
+    height: 300px; /* Espace ajouté pour simuler la longueur de la page */
+    background-color: #0A1335; /* Même couleur pour un effet fluide */
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex; /* Aligner les éléments en ligne */
+    justify-content: space-around; /* Espacement égal entre les liens */
+    align-items: center; /* Centrer verticalement les éléments */
+    padding: 10px; /* Espacement interne */
+    background-color: #0A1335; /* Couleur de fond de la navbar */
+    position: fixed; /* Fixe la navbar en haut */
+    top: 0; /* Positionner en haut de la page */
+    left: 0;
+    width: 100%; /* Navbar prend toute la largeur */
+    z-index: 1000; /* La navbar reste au-dessus des autres éléments */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Ombre pour l'effet */
+}
+
+/* Liens de la Navigation */
+.navbar .icon {
+    color: rgb(22, 242, 249); /* Couleur du texte */
+    padding: 10px 15px; /* Espacement interne des liens */
+    margin: 0 10px; /* Marge horizontale entre les liens */
+    text-decoration: none; /* Retirer le soulignement des liens */
+    border-radius: 5px; /* Arrondir les coins */
+    transition: background-color 0.3s, color 0.3s; /* Effet de transition sur survol */
+}
+
+.navbar .icon:hover {
+    background-color: #555; /* Couleur de fond au survol */
+    color: #0fdbf2; /* Couleur du texte au survol */
+}
+
+/* Espacement sous la Navbar (évite que le contenu soit masqué) */
+main {
+    margin-top: 70px; /* Compense la hauteur de la navbar */
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.carousel {
+    position: relative;
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-images img {
+    width: 100%;
+    height: auto;
+}
+
+button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 20px;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
