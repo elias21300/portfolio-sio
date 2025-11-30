@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Veille SISR - {{ date }}</title>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+</head>
+<body>
+  <h1>Veille Technologique SISR - {{ date }}</h1>
+  <p>Voici les actualités collectées automatiquement :</p>
+  <ul>
+    {% for a in articles %}
+    <li>
+      <strong>{{ a.source }}</strong><br>
+      <a href="{{ a.link }}" target="_blank">{{ a.title }}</a><br>
+      <small>{{ a.published }}</small>
+    </li>
+    {% endfor %}
+  </ul>
+  <p><a href="../index.html">⬅ Retour</a></p>
+</body>
+</html>
