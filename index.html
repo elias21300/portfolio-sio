@@ -299,7 +299,7 @@
       }
 
       const rows = data.slice(1); // skip header
-      const recent = rows.slice(0, 3);
+      const recent = rows.slice(-3).reverse();
 
       recent.forEach(row => {
         const title = safeText(row[0]) || "Sans titre";
