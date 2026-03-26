@@ -193,6 +193,28 @@
             </div>
           </a>
         </div>
+
+        <!-- Stage 2 -->
+        <div class="col">
+          <a href="https://groupesb.sharepoint.com/sites/BTSSIO2026/_layouts/15/Doc.aspx?sourcedoc=%7Bd19f7864-7ec3-4fc2-a84a-990667434dc3%7D&action=view&wd=target%28ELIAS%20ISLY%2Fstage%20n%C2%B02.one%7C1573226b-1cd2-4bd7-bbb2-d867f12cb81e%2Fprocedure%7Ca85111d3-af2e-4fbf-a923-4c56c7272fa8%2F%29&wdorigin=703&wdpartid=%7B75dee2d4-7391-47a0-ab5d-893d252ecf8d%7D%7B24%7D&wdsectionfileid=%7B1573226b-1cd2-4bd7-bbb2-d867f12cb81e%7D" target="_blank" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm bg-light rounded-4 border-start border-4 border-success p-3">
+              <div class="card-body">
+                <h5 class="card-title text-success">Stage 2 informatique UGECAM BFC</h5>
+                <p class="card-text">
+                  Réalisé en entreprise dans un service informatique.
+                  Tâches principales :
+                </p>
+                <ul>
+                  <li>Support niveau 1 et 2</li>
+                  <li>Habilitation projet</li>
+                  <li>Supervision Zabbix</li>
+                  <li>Ajustement de configuration de switch après audit</li>
+                </ul>
+              </div>
+            </div>
+          </a>
+        </div>
+
       </div>
     </section>
 
@@ -250,7 +272,7 @@
     <!-- Contact -->
     <section id="contact">
       <h1>Contact</h1>
-      <p>mail: elias.isly@gmail.com</p>
+      <p>mail: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5431383d35277a3d27382d143339353d387a373b39">[email&#160;protected]</a></p>
       <a href="https://www.linkedin.com/feed/?trk=hb_signin" target="_blank">
         <img src="images/linkedin-logo.webp" alt="LinkedIn" width="150" height="100">
       </a>
@@ -264,7 +286,7 @@
   </footer>
 
   <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
   <script>
@@ -337,14 +359,3 @@
             </a>
           `;
           container.appendChild(card);
-        }
-      },
-      error: function(err) {
-        document.getElementById("veille-container").innerHTML =
-          `<p class="text-danger">Erreur de chargement : ${err.message}</p>`;
-      }
-    });
-  </script>
-
-</body>
-</html>
