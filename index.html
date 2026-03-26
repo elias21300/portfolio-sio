@@ -272,120 +272,61 @@
 <script>
   const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQiDnN0uf4H4g19jmC2wJjKWFabDR77B5Q2T3WBkQTehaNrQBrpMum8Vll0-fhm-_8TL1cr8VbBzXIQ/pub?output=csv";
 
-  /* ----------------------------- TRADUCTION -------------------------------- */
-  async function translateText(text) {
-    if (!text) return text;
-
-    // Essai LibreTranslate
-    try {
-      const res = await fetch("https://libretranslate.de/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ q: text, source: "auto", target: "fr", format: "text" }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        if (data.translatedText) return data.translatedText;
-      }
-    } catch (e) {}
-
-    // Fallback Google gratuit
-    try {
-      const url =
-        "https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=fr&dt=t&q=" +
-        encodeURIComponent(text);
-      const res2 = await fetch(url);
-      const json = await res2.json();
-      return json[0].map(seg => seg[0]).join("") || text;
-    } catch (e) {}
-
-    return text;
-  }
-
-  /* ----------------------------- RÉSUMÉ -------------------------------- */
-  function summarize(text, maxSentences = 2) {
-    if (!text) return "";
-
-    // Séparation en phrases (simple mais efficace)
-    const sentences = text
-      .replace(/\r/g, "")
-      .split(/(?<=[.!?])\s+/)
-      .filter(s => s.length > 20);
-
-    if (sentences.length <= maxSentences) return sentences.join(" ");
-
-    // Score naïf : longueur + mots clés
-    const keywords = ["security", "cloud", "update", "attack", "tech", "IA", "cyber", "vulnerability"];
-    const scored = sentences.map(s => {
-      let score = s.length;
-      for (let k of keywords) {
-        if (s.toLowerCase().includes(k.toLowerCase())) score += 50;
-      }
-      return { s, score };
-    });
-
-    // Trier + garder les meilleures
-    scored.sort((a, b) => b.score - a.score);
-
-    const summary = scored
-      .slice(0, maxSentences)
-      .map(item => item.s)
-      .join(" ");
-
-    return summary;
-  }
-
   function safeText(str) {
     if (!str) return "";
     return String(str).replace(/\r/g, "").trim();
   }
 
-  /* ----------------------------- CHARGEMENT CSV -------------------------------- */
+  function summarize(text, maxSentences = 2) {
+    if (!text) return "";
+    const sentences = text
+      .replace(/\r/g, "")
+      .split(/(?<=[.!?])\s+/)
+      .filter(s => s.length > 20);
+    return sentences.slice(0, maxSentences).join(" ") || text.slice(0, 200) + "...";
+  }
+
   Papa.parse(CSV_URL, {
     download: true,
     skipEmptyLines: true,
-    complete: async function (results) {
+    complete: function (results) {
       const data = results.data;
-      if (!data || data.length <= 1) return;
-
       const container = document.getElementById("veille-container");
+
+      if (!data || data.length <= 1) {
+        container.innerHTML = `<p class="text-danger">Aucune donnée disponible.</p>`;
+        return;
+      }
 
       const rows = data.slice(1); // skip header
       const recent = rows.slice(0, 3);
 
-      for (const row of recent) {
-        const title = safeText(row[0]);
-        const link = safeText(row[1]) || "#";
-        const date = safeText(row[2]);
-        const description = safeText(row[3]) || "Aucune description.";
-
-        // Traduction FR
-        const [tTitle, tDesc] = await Promise.all([
-          translateText(title),
-          translateText(description)
-        ]);
-
-        // Résumé automatique
-        const resume = summarize(tDesc, 2);
+      recent.forEach(row => {
+        const title = safeText(row[0]) || "Sans titre";
+        const link  = safeText(row[1]) || "#";
+        const date  = safeText(row[2]) || "";
+        const desc  = safeText(row[3]) || "Aucune description.";
+        const resume = summarize(desc, 2);
 
         const card = document.createElement("div");
         card.className = "col";
-
         card.innerHTML = `
           <a href="${link}" target="_blank" class="text-decoration-none text-dark">
             <div class="card h-100 shadow-sm bg-white rounded-4 p-3 border-start border-4 border-primary">
               <div class="card-body">
-                <h5 class="card-title">${tTitle}</h5>
+                <h5 class="card-title">${title}</h5>
                 <p class="card-text">${resume}</p>
-                <p class="text-muted"><small>${date || ""}</small></p>
+                <p class="text-muted"><small>${date}</small></p>
               </div>
             </div>
           </a>
         `;
-
         container.appendChild(card);
-      }
+      });
+    },
+    error: function(err) {
+      document.getElementById("veille-container").innerHTML =
+        `<p class="text-danger">Erreur de chargement : ${err.message}</p>`;
     }
   });
 </script>
